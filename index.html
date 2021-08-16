@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-  
   <body>
     <div>
       <div class="text-center">
@@ -13,51 +12,110 @@
       </div>
     </div>
     <script type="text/javascript">
+
       var canvas = document.getElementById("animation");
       var ctx = canvas.getContext("2d");
 
-
-
+      // Circle 1
       x = 100;
       y = 100;
       vx = 3;
       vy = 9;
-      r = 50;
+      r = 30;
+
+      // Circle 2
       x2 = 800;
       y2 = 100;
       vx2 = 4;
       vy2 = 5;
-      x3 = 550;
-      y3 = 550;
-      vx3 = 8;
-      vy3 = 8;
-      r3 = 50;
+
+      // Wall 1
+      wall_1_X = 200;
+      wall_1_Y = 100;
+      wall_1_width = 1;
+      wall_1_height = 500;
+
+      // Wall 2
+      wall_2_X = 500;
+      wall_2_Y = 100;
+      wall_2_width = 1;
+      wall_2_height = 300;
+
       function createCircle() {
+
+        // Create outer walls
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (x > 200 && x < 200 + 10 && y > 100 && y < 100 + 300) {
-            vx=-vx;
-            vy = -vy;
-        }
-
-        if (x > canvas.width - r || x < r)  {
-          vx = -vx;
-        }
-        if (y > canvas.height - r || y < r) {
-          vy = -vy;
-        }
-        x += vx;
-        y += vy;
-
-        // draw rectanlge/lin
+        // Create inner walls
         ctx.beginPath();
-        ctx.rect(200, 100, 10, 300);
-        ctx.rect(500, 100, 10, 300);
+        ctx.rect(wall_1_X, wall_1_Y, wall_1_width, wall_1_height);
+        ctx.rect(wall_2_X, wall_2_Y, wall_2_width, wall_2_height);
         ctx.fillStyle = "#orange";
         ctx.fill();
         ctx.closePath();
 
+        // Create circle 1
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.fillStyle = "orange";
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
 
+        // Create circle 2
+        ctx.beginPath();
+        ctx.arc(x2,y2,r,0,2*Math.PI);
+        ctx.fillStyle="pink";
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+
+        // Collision Detection with inner wall + circle 1
+          // This only works with the 2 end points of the wall, not the in between. 
+        // for (let i = wall_1_Y; i < wall_1_height; i++) {
+        //   // const element = wall_1_Y[i];
+        //     if (x > wall_1_X && x < wall_1_X && y > wall_1_Y[i] && y < wall_1_Y[i]) {
+        //     vx =- vx;
+        //     vy =- vy;
+        //   }
+        // }
+        if (x > wall_1_X && x < wall_1_X && y > wall_1_Y && y < wall_1_Y) {
+          vx =- vx;
+          vy =- vy;
+        }
+
+        // Collision Detection with outer walls + circle 1
+        if (x > canvas.width - r || x < r)  {
+          vx =- vx;
+        }
+
+        if (y > canvas.height - r || y < r) {
+          vy =- vy;
+        }
+
+        x += vx;
+        y += vy;
+
+        // Collision Detection with inner walls + circle 2
+        if (x2 > 200 && x2 < 200 + 10 && y2 > 100 && y2 < 100 + 300) {
+          vx2 =- vx2;
+          vy2 =- vy2;
+        }
+
+        // Collision Detection with outer walls + circle 2
+        if(x2 > canvas.width- r || x2<r) { 
+          vx2 =- vx2; 
+        }
+        if(y2 > canvas.height -r || y2<r)  {
+          vy2 =- vy2;     
+        }
+
+        x2 += vx2; 
+        y2 += vy2;
+
+
+        window.requestAnimationFrame(createCircle);
+      
         //first boundary line to the left
         //ctx.moveTo(200, 300);
         //ctx.lineTo(300, 100);
@@ -66,42 +124,11 @@
         // ctx.moveTo(700, 200);
         // ctx.lineTo(450, 100);
         // ctx.stroke();
-
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, 2 * Math.PI);
-        ctx.fillStyle = "orange";
-        ctx.fill();
-        ctx.stroke();
-        ctx.closePath();
-        //second circle
-
-          if (x2 > 200 && x2 < 200 + 10 && y2 > 100 && y2 < 100 + 300) {
-            vx2=-vx2;
-            vy2 = -vy2;
-          }
-
-
-          if(x2 > canvas.width- r || x2<r) { 
-            vx2=-vx2; 
-          }
-          if(y2 > canvas.height -r || y2<r)  {
-            vy2=-vy2; 
-          }
-
-          x2+=vx2;
-          y2+=vy2;
-
-          ctx.beginPath();
-           ctx.arc(x2,y2,r,0,2*Math.PI);
-          ctx.fillStyle="pink";
-          ctx.fill();
-          ctx.stroke();
-          ctx.closePath();
-        
-        window.requestAnimationFrame(createCircle);
       }
+
       createCircle();
       //setInterval(createCircle, 10);
+
     </script>
   </body>
 </html>
