@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Canvas</title>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <style type="text/css">
-      body,
-      html {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
+  
   <body>
     <div>
       <div class="text-center">
@@ -28,13 +8,16 @@
           id="animation"
           width="900"
           height="600"
-          style="border: 2px solid #2d0057; background: #2d0057"
+          style="border: 2px solid #2d0057; background: #ffffff"
         ></canvas>
       </div>
     </div>
     <script type="text/javascript">
       var canvas = document.getElementById("animation");
       var ctx = canvas.getContext("2d");
+
+
+
       x = 100;
       y = 100;
       vx = 3;
@@ -51,6 +34,8 @@
       r3 = 50;
       function createCircle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        
         if (x > canvas.width - r || x < r)  {
           vx = -vx;
         }
@@ -59,6 +44,15 @@
         }
         x += vx;
         y += vy;
+
+        //first boundary line to the left
+        ctx.moveTo(200, 300);
+        ctx.lineTo(300, 100);
+
+        //second boundary line to the right
+        ctx.moveTo(700, 200);
+        ctx.lineTo(450, 100);
+        ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x, y, r, 0, 2 * Math.PI);
