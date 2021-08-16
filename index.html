@@ -22,7 +22,7 @@
       y = 100;
       vx = 3;
       vy = 9;
-      r = 70;
+      r = 50;
       x2 = 800;
       y2 = 100;
       vx2 = 4;
@@ -35,7 +35,11 @@
       function createCircle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        
+        if (x > 200 && x < 200 + 10 && y > 100 && y < 100 + 300) {
+            vx=-vx;
+            vy = -vy;
+        }
+
         if (x > canvas.width - r || x < r)  {
           vx = -vx;
         }
@@ -45,14 +49,23 @@
         x += vx;
         y += vy;
 
+        // draw rectanlge/lin
+        ctx.beginPath();
+        ctx.rect(200, 100, 10, 300);
+        ctx.rect(500, 100, 10, 300);
+        ctx.fillStyle = "#orange";
+        ctx.fill();
+        ctx.closePath();
+
+
         //first boundary line to the left
-        ctx.moveTo(200, 300);
-        ctx.lineTo(300, 100);
+        //ctx.moveTo(200, 300);
+        //ctx.lineTo(300, 100);
 
         //second boundary line to the right
-        ctx.moveTo(700, 200);
-        ctx.lineTo(450, 100);
-        ctx.stroke();
+        // ctx.moveTo(700, 200);
+        // ctx.lineTo(450, 100);
+        // ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x, y, r, 0, 2 * Math.PI);
@@ -61,8 +74,20 @@
         ctx.stroke();
         ctx.closePath();
         //second circle
-        if(x2 > canvas.width- r || x2<r) { vx2=-vx2; }
-        if(y2 > canvas.height -r || y2<r)  { vy2=-vy2; }
+
+          if (x2 > 200 && x2 < 200 + 10 && y2 > 100 && y2 < 100 + 300) {
+            vx2=-vx2;
+            vy2 = -vy2;
+          }
+
+
+          if(x2 > canvas.width- r || x2<r) { 
+            vx2=-vx2; 
+          }
+          if(y2 > canvas.height -r || y2<r)  {
+            vy2=-vy2; 
+          }
+
           x2+=vx2;
           y2+=vy2;
 
