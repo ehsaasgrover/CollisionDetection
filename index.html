@@ -40,11 +40,12 @@ addEventListener('resize', () => {
 
 // Circle Object
 class Circle {
-  constructor(x, y, radius, color) {
+  constructor(x, y, radius, color, speed) {
     this.x = x
     this.y = y
     this.radius = radius
     this.color = color
+    this.speed = speed
   }
 
   draw() {
@@ -56,7 +57,7 @@ class Circle {
   }
 
   updateRedCircle() {
-    this.x += 5;
+    this.x += this.speed;
     // this.y += 5;
     this.draw()
   }
@@ -119,10 +120,10 @@ let Circle2;
 let Wall1;
 let Wall2;
 function init() {
-  Circle1 = new Circle(100,300, 25,'red');
-  Circle2 = new Circle(600,300, 25,'black');
-Wall1 = new Wall(500, 200, 2, 600);
-Wall2 = new Wall(200, 200, 2, 600);
+  Circle1 = new Circle(100,300, 25,'red', 5);
+  Circle2 = new Circle(600,300, 25,'black', 0);
+  Wall1 = new Wall(500, 200, 2, 600);
+  Wall2 = new Wall(200, 200, 2, 600);
 }
 
 // Animation Loop
@@ -130,10 +131,8 @@ function animate() {
   requestAnimationFrame(animate)
   c.clearRect(0, 0, canvas.width, canvas.height)
 
-
   Circle1.updateRedCircle();
   Circle2.updateTarget();
-
 
   console.log(getDistance(Circle1.x, Circle1.y, Circle2.x, Circle2.y));
   console.log(getDistance(Circle1.x, Circle1.y, Wall1.height, Wall1.width));
@@ -160,12 +159,12 @@ function animate() {
   // Collision detection with outer walls (circle stops)
   if (Circle1.x > canvas.width - Circle1.radius || Circle1.x < Circle1.radius) {
     Circle1.color = 'green';
-    Circle1.x = canvas.width;
+    Circle1.speed =- Circle1.speed;
   }
 
   if (Circle1.y > canvas.height - Circle1.radius || Circle1.y < Circle1.radius) {
     Circle1.color = 'green';
-    Circle.y = canvas.height;
+    Circle1.speed =- Circle1.speed;
   }
 
   Wall1.update();
