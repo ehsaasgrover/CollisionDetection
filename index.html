@@ -58,6 +58,7 @@ class Circle {
 
   updateRedCircle() {
     this.x += this.speed;
+    this.y += this.speed;
     // this.y += 5;
     this.draw()
   }
@@ -139,6 +140,7 @@ function animate() {
   
   if(getDistance(Circle1.x, Circle1.y, Circle2.x, Circle2.y) < Circle1.radius + Circle2.radius){
     Circle2.color = 'green';
+    Circle1.speed =- Circle1.speed;
   }
   else {
     Circle2.color = 'black';
@@ -146,12 +148,14 @@ function animate() {
 
   if(getWallDistance(Circle1.x, Circle1.y, Circle1.radius, Wall1.x, Wall1.y, Wall1.width, Wall1.height)){
     Wall1.color = 'green';
+    Circle1.speed =- Circle1.speed;
   } else {
     Wall1.color = 'black';
   }
 
   if(getWallDistance(Circle1.x, Circle1.y, Circle1.radius, Wall2.x, Wall2.y, Wall2.width, Wall2.height)){
     Wall2.color = 'green';
+    Circle1.speed =- Circle1.speed;
   } else {
     Wall2.color = 'black';
   }
