@@ -118,6 +118,8 @@ function init() {
   Circle1 = new Circle(300,400, 25,'red', 5);
   Circle2 = new Circle(600,300, 25,'black', 1);
   Circle3 = new Circle(800, 900, 25,'black', 3)
+  Circle1 = new Circle(200,100, 25,'red', 5);
+  Circle2 = new Circle(600,300, 25,'black', 0);
   Wall1 = new Wall(500, 200, 2, 600);
   Wall2 = new Wall(200, 200, 2, 600);
 }
@@ -198,6 +200,13 @@ function animate() {
 
   Circle3.x += Circle3.speed;
   Circle3.y += -Circle2.speed;
+  if (Circle1.y > canvas.height - Circle1.radius || Circle1.y < Circle1.radius) {
+    Circle1.color = 'green';
+    Circle1.speed =- Circle1.speed;
+  }
+
+  Circle1.x += Circle1.speed;
+  Circle1.y += Circle1.speed;
 
   Wall1.update();
   Wall2.update();
